@@ -1,0 +1,70 @@
+-- Dataset used is from Kaggle: https://www.kaggle.com/datasets/equinxx/spotify-top-50-songs-in-2021?select=spotify_top50_2021.csv
+-- Create new table from CSV file to insert Spotify data
+
+/* 
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL 
+)
+*/
+
+SELECT * FROM BIT_DB.Spotifydata;
+
+-- SQL queries used on table for practice in exploring data
+
+-- Find average popularity by artist and track.
+SELECT 
+    artist_name,
+    track_name,
+    AVG (popularity)
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name, track_name;
+
+-- Who are the top 10 most popular artists?
+SELECT 
+    artist_name,
+    track_name,
+    popularity
+FROM BIT_DB.Spotifydata
+ORDER BY popularity DESC
+LIMIT 10;
+
+-- Which track has the slowest tempo?
+SELECT
+    artist_name,
+    track_name,
+    tempo
+FROM BIT_DB.Spotifydata
+ORDER BY tempo ASC
+LIMIT 1;
+
+--Which track is the shortest?
+SELECT
+    artist_name,
+    track_name,
+    duration_ms
+FROM BIT_DB.Spotifydata
+ORDER BY duration_ms ASC
+LIMIT 1;
+
+-- How many top hits does Doja Cat has in this list?
+SELECT 
+    COUNT(track_name)
+FROM BIT_DB.Spotifydata
+WHERE artist_name = 'Doja Cat';
